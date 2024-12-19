@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>x64</Platforms>
+    <ErrorReport>none</ErrorReport>
+    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <BaseOutputPath>bin</BaseOutputPath>
+    <BaseIntermediateOutputPath>obj</BaseIntermediateOutputPath>
+    <Company>Yonder</Company>
+    <Authors>Yonder</Authors>
+    <Title>$(AssemblyName)</Title>
+    <Product>$(AssemblyName)</Product>
+    <Description>A library that makes it easy to abstract reading and writing binary files in a 1:1 form.</Description>
+    <Copyright>Copyright © Yonder 2024</Copyright>
+    <FileVersion>1.0.0</FileVersion>
+    <InformationalVersion>1.0.0</InformationalVersion>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <Version>1.0.0</Version>
+    <PackageLicenseFile>..\LICENSE</PackageLicenseFile>
+    <PackAsTool>False</PackAsTool>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <Prefer32Bit>False</Prefer32Bit>
+    <IsAotCompatible>true</IsAotCompatible>
+    <IsTrimmable>true</IsTrimmable>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+  </PropertyGroup>
+
+  <PropertyGroup  Condition="'$(Configuration)' == 'Release'">
+    <StripSymbols>true</StripSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)\extern\UtilSharp\UtilSharp\UtilSharp.csproj" />
+    <TrimmerRootAssembly Include="UtilSharp" />
+  </ItemGroup>
+
+</Project>
