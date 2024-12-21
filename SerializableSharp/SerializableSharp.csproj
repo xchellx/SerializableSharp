@@ -18,10 +18,6 @@
     <Product>$(AssemblyName)</Product>
     <Description>A library that makes it easy to abstract reading and writing binary files in a 1:1 form.</Description>
     <Copyright>Copyright © Yonder 2024</Copyright>
-    <FileVersion>1.0.0</FileVersion>
-    <InformationalVersion>1.0.0</InformationalVersion>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <Version>1.0.0</Version>
     <PackageLicenseFile>..\LICENSE</PackageLicenseFile>
     <PackAsTool>False</PackAsTool>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
@@ -29,9 +25,10 @@
     <IsAotCompatible>true</IsAotCompatible>
     <IsTrimmable>true</IsTrimmable>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
-  <PropertyGroup  Condition="'$(Configuration)' == 'Release'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <StripSymbols>true</StripSymbols>
   </PropertyGroup>
 
@@ -46,5 +43,28 @@
     <ProjectReference Include="$(SolutionDir)\extern\UtilSharp\UtilSharp\UtilSharp.csproj" />
     <TrimmerRootAssembly Include="UtilSharp" />
   </ItemGroup>
+
+  <Target Name="SerializableSharp_GenerateGitVersion" BeforeTargets="GetGitHash;GenerateAssemblyAttributes">
+    <Exec Command="git rev-parse HEAD || echo unknown" ConsoleToMSBuild="true" IgnoreExitCode="true">
+      <Output PropertyName="SerializableSharp_OutputA" TaskParameter="ConsoleOutput"/>
+    </Exec>
+
+    <Exec Command="git describe --tag --abbrev=0 || echo unknown" ConsoleToMSBuild="true" IgnoreExitCode="true">
+      <Output PropertyName="SerializableSharp_OutputB" TaskParameter="ConsoleOutput"/>
+    </Exec>
+
+    <PropertyGroup>
+      <SerializableSharp_Version>$(SerializableSharp_OutputA.Trim()) $(SerializableSharp_OutputB.Trim())</SerializableSharp_Version>
+      <SerializableSharp_Tag>$(SerializableSharp_OutputB.Trim())</SerializableSharp_Tag>
+      <FileVersion>$(SerializableSharp_Version)</FileVersion>
+      <InformationalVersion>$(SerializableSharp_Version)</InformationalVersion>
+      <AssemblyVersion>$(SerializableSharp_Tag)</AssemblyVersion>
+    </PropertyGroup>
+    <ItemGroup>
+      <AssemblyMetadata Include="SerializableSharp_GitVersionMetaData">
+        <Value>$(SerializableSharp_Version)</Value>
+      </AssemblyMetadata>
+    </ItemGroup>
+  </Target>
 
 </Project>
