@@ -40,6 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MSBuildGitHash" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="$(SolutionDir)\extern\UtilSharp\UtilSharp\UtilSharp.csproj" />
     <TrimmerRootAssembly Include="UtilSharp" />
   </ItemGroup>
